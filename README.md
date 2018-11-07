@@ -1,0 +1,2 @@
+# cantrip
+DM helper function
