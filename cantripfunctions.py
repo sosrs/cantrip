@@ -25,7 +25,12 @@ def evaluate_roll(inputstr:str):
     try:
         return int(inputstr)
     except ValueError:
-        outputlist = list(map(int,inputstr.split('d')))
+        try:
+            outputlist = list(map(int,inputstr.split('d')))
+        except ValueError:
+            # todo: how to output this error to the window
+            print("Is there a typo in your query? We couldn't evaluate this item:",inputstr)
+            return 0
         output = roll_die(outputlist[0],outputlist[1])
         print(inputstr,'=',output)
         return output
@@ -35,15 +40,22 @@ def master_roll(string:str)-> int:
     # This function will take in a string of any number of XdY or integer components and sum the total
     if string=='':
         return ''
+    # strip string of spaces, split the string on - or + but keep those items as entries in the list
     a=re.split("([-+])",string.replace(' ',''))
     if a[0]=='':
         a.remove('')
+
     def slave_roll(input:list):
+        # this subfunction will take a string list of integers, XdY rolls, and + or - operations, and
+        # evaluate the statement
         if len(input) == 0:
             return 0
         elif len(input) == 1 and (input[0]== '+' or input[0]== '-'):
+            # hanging operators at the end will be assumed to add 0
             return 0
         elif len(input) == 1:
+            # a single roll or integer string will be evaluated and returned. if another item is passed,
+            # the evaluate function will throw an error
             return evaluate_roll(input[0])
 
         first = input.pop(0)
@@ -93,7 +105,12 @@ def add_roller(parent):
 def widgetFunc(inputList,outputWidget,func=sum):
     outputWidget.delete(0,END)
     outputWidget.insert(func(inputList))
-class Char:
+
+class SkillWidget(Widget):
+    # This will create a container widget that
+
+class Character:
+    # This will create an instance of a character with their immutable characteristics (skills and stats)
     def __init__(self,name,STR,DEX,CON,INT,WIS,CHA):
         self.name = name
         self.status = []
@@ -106,5 +123,9 @@ class Char:
         self.skillProf = set()
         self.condition = set()
 
+
+class CharCombat:
+    # This will take in a Character, and create a representation of them for combat (tracking mutable characteristics
+    # like current HP and status effects)
 print(re.split("([-+])",'1d4'.replace(' ','')))
 print(master_roll('1d4'))
