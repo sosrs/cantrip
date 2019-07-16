@@ -3,19 +3,16 @@ import cantripfunctions as cf
 import random
 from tkinter import *
 from tkinter.ttk import Notebook
+
 # Test area here
 window = Tk()
 window.title("Cantrip: Making wizarding easier since 20 minutes into the future")
 
 
-
-
-
-
-
-#Create the tabs under the window
+# Create the tabs under the window
 tab_control=Notebook(window)
-#All tabs listed here
+
+# All tabs listed here
 skillTab = Frame(tab_control)
 importChar = Frame(tab_control,padx=100)
 rollTab = Frame(tab_control)
@@ -25,15 +22,19 @@ tab_control.add(importChar,text='Import a character')
 tab_control.add(rollTab,text='Complex Rolls')
 tab_control.pack(expand=1,fill='both')
 
-def click():
-    entered_text=nameentry.get()
-
 # Skill tab
 cf.add_roller(skillTab)
+skillList= sorted(cf.skillSet)
+skillDict={}
+
+for skill in skillList:
+    skillDict[skill] = Frame(skillTab)
 
 
 # Import a character Tab
 
+def click():
+    entered_text=nameentry.get()
 w = Label(importChar,text='Enter the stats for the creature you want to add:',)
 w.grid(row=1,column=0,sticky=W)
 
