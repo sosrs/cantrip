@@ -9,6 +9,7 @@ skillSet = {'Athletics','Acrobatics','Sleight of Hand','Stealth,','Arcana','Hist
 conditionSet = {'Blinded','Charmed','Deafened','Fatigued','Frightened','Grappled','Incapacitated','Invisible',
                 'Paralyzed','Petrified','Poisoned','Prone','Restrained','Stunned','Unconscious','Exhaustion'}
 
+
 def roll_die(num: int, die: int, bonus: int = 0)->int:
 
     # This function will make a standard XdY + Z roll and return it as an integer
@@ -32,25 +33,28 @@ def evaluate_roll(inputstr:str):
             print("Is there a typo in your query? We couldn't evaluate this item:",inputstr)
             return 0
         output = roll_die(outputlist[0],outputlist[1])
-        print(inputstr,'=',output)
+        # print(inputstr,'=',output)
         return output
 
 
-def master_roll(string:str)-> int:
-    # This function will take in a string of any number of XdY or integer components and sum the total
-    if string=='':
+def master_roll(string: str):
+    # This function will take in a single string expression of any number of XdY or integer components
+    # and sum the total
+    string = string.replace(' ', '')
+    if string == '' or string== '\n':
         return ''
     # strip string of spaces, split the string on - or + but keep those items as entries in the list
-    a=re.split("([-+])",string.replace(' ',''))
-    if a[0]=='':
-        a.remove('')
+    a = re.split("([-+])", string)
+    for i in range(len(a)):
+        if a[i] == '':
+            a.remove('')
 
-    def slave_roll(input:list):
+    def slave_roll(input: list):
         # this subfunction will take a string list of integers, XdY rolls, and + or - operations, and
         # evaluate the statement
         if len(input) == 0:
             return 0
-        elif len(input) == 1 and (input[0]== '+' or input[0]== '-'):
+        elif len(input) == 1 and (input[0] == '+' or input[0] == '-'):
             # hanging operators at the end will be assumed to add 0
             return 0
         elif len(input) == 1:
@@ -62,10 +66,21 @@ def master_roll(string:str)-> int:
         if first == '+':
             return evaluate_roll(input.pop(0)) + slave_roll(input)
         if first == '-':
-            return -evaluate_roll(input.pop(0))+slave_roll(input)
+            return -evaluate_roll(input.pop(0)) + slave_roll(input)
         else:
-            return evaluate_roll(first)+slave_roll(input)
-    return(slave_roll(a))
+            return evaluate_roll(first) + slave_roll(input)
+
+    return (slave_roll(a))
+
+
+def master_master_roll(string:str)->str:
+    # this expression will take any number of dice summing expressions as a string, separated by commas, and return
+    # their evaluations in the same order, separated by commas
+    string2 = string.replace(' ', '')
+    a = string2.split(',')
+    for i in range(len(a)):
+        a[i] = str(master_roll(a[i]))
+    return ','.join(a)
 
 
 def add_roller(parent):
@@ -88,8 +103,6 @@ def add_roller(parent):
     entry4 = Entry(rollWidget,width=5,bg='SystemButtonFace',bd=3)
     label1 = Button(rollWidget, text='I want to roll:', command=lambda:roll_the_dice(int(entry1.get()),int(entry2.get()),int(entry3.get()),entry4))
 
-
-
     rollWidget.pack()
 
     label1.pack(side='left',fill='y')
@@ -106,8 +119,11 @@ def widgetFunc(inputList,outputWidget,func=sum):
     outputWidget.delete(0,END)
     outputWidget.insert(func(inputList))
 
-class SkillWidget(Widget):
-    # This will create a container widget that
+class SkillWidget(Frame):
+    def __init__(self,parent,skill):
+        pass
+    # This will create a composite widget which will hold
+
 
 class Character:
     # This will create an instance of a character with their immutable characteristics (skills and stats)
@@ -124,8 +140,9 @@ class Character:
         self.condition = set()
 
 
-class CharCombat:
+#class CharCombat:
     # This will take in a Character, and create a representation of them for combat (tracking mutable characteristics
     # like current HP and status effects)
 print(re.split("([-+])",'1d4'.replace(' ','')))
-print(master_roll('1d4'))
+print(master_roll(''))
+

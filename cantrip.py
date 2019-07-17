@@ -48,9 +48,10 @@ submitname.grid(row=1,column=2,sticky=W)
 def show_roll():
     output = rollentry.get('1.0',END)
     rollout.delete(0, END)
-    rollout.insert(0, str(cf.master_roll(output)))
+    rollout.insert(0, cf.master_master_roll(output))
 
-rollinstructions= Label(rollTab,text='Enter any addition or subtraction of integers or XdY rolls. '
+rollinstructions= Label(rollTab,text='Enter any number of rolls you want calculated! Separate them by commas. \n'
+                                     'This handles addition or subtraction of integers or XdY rolls. '
                                      'No parentheses, or multiplication')
 rollentry = Text(rollTab,bg='white', width=20,height=2,wrap=CHAR)
 rollButton = Button(rollTab, text='Roll!', command = show_roll)
