@@ -86,10 +86,15 @@ def master_master_roll(string:str)->str:
 def add_roller(parent):
     # this function will pack the basic roll widget to the frame this is called on
     # intended to be called when a new tab is created
+
+    RollerWidget(parent).pack()
+
+    '''
     def roll_the_dice(x, y, z, outputWidget):
         total = roll_die(x, y, z)
         outputWidget.delete(0,END)
         outputWidget.insert(0, total)
+    
     rollWidget= LabelFrame(parent,text='Roll some dice!')
     entry1 = Entry(rollWidget,width=2,bg='white',)
     entry1.insert(0, '1')
@@ -103,7 +108,7 @@ def add_roller(parent):
     entry4 = Entry(rollWidget,width=5,bg='SystemButtonFace',bd=3)
     label1 = Button(rollWidget, text='I want to roll:', command=lambda:roll_the_dice(int(entry1.get()),int(entry2.get()),int(entry3.get()),entry4))
 
-    rollWidget.pack()
+    #rollWidget.pack()
 
     label1.pack(side='left',fill='y')
     entry1.pack(side='left',fill='y')
@@ -113,6 +118,40 @@ def add_roller(parent):
     entry3.pack(side='left',fill='y')
     label4.pack(side='left',fill='y')
     entry4.pack(side='left',fill='y')
+    rollWidget.pack()'''
+
+
+class RollerWidget(LabelFrame):
+    def __init__(self,parent):
+        LabelFrame.__init__(self,parent,text='Roll a die!')
+        self.entry1 = Entry(self,width=2,bg='white')
+        self.entry1.insert(0, '1')
+        self.label2 = Label(self, text='d')
+        self.entry2 = Entry(self, width=4, bg='white')
+        self.entry2.insert(0, '20')
+        self.label3 = Label(self, text='+')
+        self.entry3 = Entry(self, width=2, bg='white')
+        self.entry3.insert(0, '0')
+        self.label4 = Label(self, text='   Results: ')
+        self.entry4 = Entry(self, width=5, bg='SystemButtonFace', bd=3)
+        self.label1 = Button(self, text='I want to roll:',
+                        command=self.roll_the_die)
+
+    def roll_the_die(self):
+        total = roll_die(int(self.entry1.get()), int(self.entry2.get()), int(self.entry3.get()))
+        self.entry4.delete(0, END)
+        self.entry4.insert(0, total)
+
+    def pack(self):
+        self.label1.pack(side='left', fill='y')
+        self.entry1.pack(side='left', fill='y')
+        self.label2.pack(side='left', fill='y')
+        self.entry2.pack(side='left', fill='y')
+        self.label3.pack(side='left', fill='y')
+        self.entry3.pack(side='left', fill='y')
+        self.label4.pack(side='left', fill='y')
+        self.entry4.pack(side='left', fill='y')
+        super().pack()
 
 
 def widgetFunc(inputList,outputWidget,func=sum):

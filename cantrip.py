@@ -35,6 +35,8 @@ for skill in skillList:
 
 def click():
     entered_text=nameentry.get()
+
+
 w = Label(importChar,text='Enter the stats for the creature you want to add:',)
 w.grid(row=1,column=0,sticky=W)
 
