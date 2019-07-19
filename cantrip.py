@@ -1,34 +1,34 @@
 # This will be the actual function app to track combat and skill challenges in DnD
 import cantripfunctions as cf
+from CantripClasses import *
 import random
 from tkinter import *
-from tkinter.ttk import Notebook
-
+import tkinter.ttk as ttk
 # Test area here
 window = Tk()
 window.title("Cantrip: Making wizarding easier since 20 minutes into the future")
 
 
 # Create the tabs under the window
-tab_control=Notebook(window)
+tab_control = ttk.Notebook(window)
 
 # All tabs listed here
-skillTab = Frame(tab_control)
+skillTab = SkillTab(tab_control)
 importChar = Frame(tab_control,padx=100)
 rollTab = Frame(tab_control)
 
-tab_control.add(skillTab,text='Skill Rolls')
-tab_control.add(importChar,text='Import a character')
-tab_control.add(rollTab,text='Complex Rolls')
-tab_control.pack(expand=1,fill='both')
+tab_control.add(skillTab, text='Skill Rolls')
+tab_control.add(importChar, text='Import a character')
+tab_control.add(rollTab, text='Complex Rolls')
+tab_control.pack(expand=1, fill='both')
 
 # Skill tab
-cf.add_roller(skillTab)
-skillList= sorted(cf.skillSet)
+skillList= sorted(cf.SKILLDICT)
 skillDict={}
 
 for skill in skillList:
-    skillDict[skill] = Frame(skillTab)
+    skillDict[skill] = SkillWidget(skillTab,skill)
+    skillDict[skill].pack()
 
 
 # Import a character Tab
@@ -52,12 +52,14 @@ def show_roll():
     rollout.delete(0, END)
     rollout.insert(0, cf.master_master_roll(output))
 
-rollinstructions= Label(rollTab,text='Enter any number of rolls you want calculated! Separate them by commas. \n'
+
+rollinstructions = Label(rollTab,text='Enter any number of rolls you want calculated! Separate them by commas. \n'
                                      'This handles addition or subtraction of integers or XdY rolls. '
                                      'No parentheses, or multiplication')
 rollentry = Text(rollTab,bg='white', width=20,height=2,wrap=CHAR)
 rollButton = Button(rollTab, text='Roll!', command = show_roll)
 rollout = Entry(rollTab,bg='SystemButtonFace',bd=3)
+rollentry.insert('1.0','1d20 + 1 - 1d6')
 rollinstructions.pack()
 rollentry.pack()
 rollButton.pack()

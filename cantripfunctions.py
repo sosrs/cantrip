@@ -1,12 +1,17 @@
 from tkinter import *
+from CantripClasses import *
 import tkinter.ttk as ttk
 import re
 
-# These are the custom functions I will use in my cantrip app
-skillSet = {'Athletics','Acrobatics','Sleight of Hand','Stealth,','Arcana','History','Investigation','Nature',
+# These are the custom functions and constants I will use in my cantrip app
+SKILLSET = {'Athletics','Acrobatics','Sleight of Hand','Stealth','Arcana','History','Investigation','Nature',
             'Religion','Animal Handling','Insight','Medicine','Perception','Survival','Deception','Intimidation',
             'Performance','Persuasion'}
-conditionSet = {'Blinded','Charmed','Deafened','Fatigued','Frightened','Grappled','Incapacitated','Invisible',
+SKILLDICT = {'Athletics':'Str','Acrobatics':'Dex','Sleight of Hand':'Dex','Stealth':'Dex','Arcana':'Int',
+             'History':'Int','Investigation':'Int','Nature':'Int','Religion':'Int','Animal Handling':'Wis',
+             'Insight':'Wis','Medicine':'Wis','Perception':'Wis','Survival':'Wis','Deception':'Cha',
+             'Intimidation':'Cha','Performance':'Cha','Persuasion':'Cha'}
+CONDITIONSET = {'Blinded','Charmed','Deafened','Fatigued','Frightened','Grappled','Incapacitated','Invisible',
                 'Paralyzed','Petrified','Poisoned','Prone','Restrained','Stunned','Unconscious','Exhaustion'}
 
 
@@ -21,7 +26,7 @@ def roll_die(num: int, die: int, bonus: int = 0)->int:
     return total + bonus
 
 
-def evaluate_roll(inputstr:str):
+def evaluate_roll(inputstr:str)->int:
     # This will take in a string of either an integer or a XdY roll and return the result as an integer
     try:
         return int(inputstr)
@@ -37,7 +42,7 @@ def evaluate_roll(inputstr:str):
         return output
 
 
-def master_roll(string: str):
+def master_roll(string: str)->int:
     # This function will take in a single string expression of any number of XdY or integer components
     # and sum the total
     string = string.replace(' ', '')
@@ -49,7 +54,7 @@ def master_roll(string: str):
         if a[i] == '':
             a.remove('')
 
-    def slave_roll(input: list):
+    def slave_roll(input: list)->int:
         # this subfunction will take a string list of integers, XdY rolls, and + or - operations, and
         # evaluate the statement
         if len(input) == 0:
@@ -70,7 +75,7 @@ def master_roll(string: str):
         else:
             return evaluate_roll(first) + slave_roll(input)
 
-    return (slave_roll(a))
+    return slave_roll(a)
 
 
 def master_master_roll(string:str)->str:
@@ -121,67 +126,11 @@ def add_roller(parent):
     rollWidget.pack()'''
 
 
-class RollerWidget(LabelFrame):
-    def __init__(self,parent):
-        LabelFrame.__init__(self,parent,text='Roll a die!')
-        self.entry1 = Entry(self,width=2,bg='white')
-        self.entry1.insert(0, '1')
-        self.label2 = Label(self, text='d')
-        self.entry2 = Entry(self, width=4, bg='white')
-        self.entry2.insert(0, '20')
-        self.label3 = Label(self, text='+')
-        self.entry3 = Entry(self, width=2, bg='white')
-        self.entry3.insert(0, '0')
-        self.label4 = Label(self, text='   Results: ')
-        self.entry4 = Entry(self, width=5, bg='SystemButtonFace', bd=3)
-        self.label1 = Button(self, text='I want to roll:',
-                        command=self.roll_the_die)
-
-    def roll_the_die(self):
-        total = roll_die(int(self.entry1.get()), int(self.entry2.get()), int(self.entry3.get()))
-        self.entry4.delete(0, END)
-        self.entry4.insert(0, total)
-
-    def pack(self):
-        self.label1.pack(side='left', fill='y')
-        self.entry1.pack(side='left', fill='y')
-        self.label2.pack(side='left', fill='y')
-        self.entry2.pack(side='left', fill='y')
-        self.label3.pack(side='left', fill='y')
-        self.entry3.pack(side='left', fill='y')
-        self.label4.pack(side='left', fill='y')
-        self.entry4.pack(side='left', fill='y')
-        super().pack()
-
-
 def widgetFunc(inputList,outputWidget,func=sum):
     outputWidget.delete(0,END)
     outputWidget.insert(func(inputList))
 
-class SkillWidget(Frame):
-    def __init__(self,parent,skill):
-        pass
-    # This will create a composite widget which will hold
 
-
-class Character:
-    # This will create an instance of a character with their immutable characteristics (skills and stats)
-    def __init__(self,name,STR,DEX,CON,INT,WIS,CHA):
-        self.name = name
-        self.status = []
-        self.STR = STR
-        self.DEX = DEX
-        self.CON = CON
-        self.INT = INT
-        self.WIS = WIS
-        self.CHA = CHA
-        self.skillProf = set()
-        self.condition = set()
-
-
-#class CharCombat:
-    # This will take in a Character, and create a representation of them for combat (tracking mutable characteristics
-    # like current HP and status effects)
 print(re.split("([-+])",'1d4'.replace(' ','')))
 print(master_roll(''))
 
