@@ -4,6 +4,8 @@ from CantripClasses import *
 import random
 from tkinter import *
 import tkinter.ttk as ttk
+
+
 # Test area here
 window = Tk()
 window.title("Cantrip: Making wizarding easier since 20 minutes into the future")
@@ -25,10 +27,18 @@ tab_control.pack(expand=1, fill='both')
 # Skill tab
 skillList= sorted(cf.SKILLDICT)
 skillDict={}
+header= Frame(skillTab,bd=1,relief=RIDGE,pady=2,)
+nameheader = Label(header, text='Skill', justify=CENTER,width=12,)
+nameheader.grid(row=0, column=0)
+abilityheader= Label(header,text='Ability',width=4)
+abilityheader.grid(row=0, column=1)
+
+
+header.pack(anchor='w')
 
 for skill in skillList:
     skillDict[skill] = SkillWidget(skillTab,skill)
-    skillDict[skill].pack()
+    skillDict[skill].pack(anchor='w')
 
 
 # Import a character Tab

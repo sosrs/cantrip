@@ -55,11 +55,10 @@ class SkillWidget(Frame):
         self.bonus = Entry(self,width=3,bg='white',justify=CENTER)
         self.bonus.insert(0,modifier)
         self.bonus.grid(row=0,column=3)
-        Label(self,text='Proficient?:').grid(row=0,column=4)
-        self.proficient = False
-        # todo:currently all checkbuttons are linked tot he same variable and are checked all at once
-        self.prof = Checkbutton(self,text='Proficient?',variable=self.proficient,onvalue=True,offvalue=False)
-        self.prof.grid(row=0,column=5)
+        #Label(self,text='Proficient?:').grid(row=0,column=4)
+        self.proficient = BooleanVar()
+        self.prof = Checkbutton(self,text='Proficient?',variable=self.proficient)
+        self.prof.grid(row=0,column=4)
 
 
     # This will create a composite widget which will hold
