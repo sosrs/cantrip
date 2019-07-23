@@ -78,21 +78,13 @@ def master_roll(string: str)->int:
     return slave_roll(a)
 
 
-def master_master_roll(string:str)->str:
-    # this expression will take any number of dice summing expressions as a string, separated by commas, and return
-    # their evaluations in the same order, separated by commas
-    string2 = string.replace(' ', '')
-    a = string2.split(',')
-    for i in range(len(a)):
-        a[i] = str(master_roll(a[i]))
-    return ','.join(a)
-
-
-def add_roller(parent):
+def add_roller(parent,method='pack'):
     # this function will pack the basic roll widget to the frame this is called on
     # intended to be called when a new tab is created
-
-    RollerWidget(parent).pack()
+    if method== 'pack':
+        RollerWidget(parent).pack()
+    elif method == 'grid':
+        RollerWidget(parent).grid(row=0, column=0)
 
     '''
     def roll_the_dice(x, y, z, outputWidget):

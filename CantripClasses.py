@@ -9,6 +9,62 @@ class SkillTab(Frame):
     def __init__(self,*args,**kwargs):
         Frame.__init__(self,*args,**kwargs)
         cf.add_roller(self)
+        self.skillDict = {}
+        self.header = Frame(self, bd=1, relief=RIDGE, pady=2, )
+        self.nameheader = Label(self.header, text='Skill', justify=CENTER, width=14 )
+        self.nameheader.grid(row=0, column=0)
+
+        ttk.Separator(self.header,orient=VERTICAL).grid(column=1,row=0,sticky='ns')
+
+        self.abilityheader = Label(self.header, text='Ability', width=4)
+        self.abilityheader.grid(row=0, column=2)
+
+        ttk.Separator(self.header,orient=VERTICAL).grid(column=3,row=0, sticky='ns')
+
+        self.modheader=Label(self.header,text= 'Ability Modifier',width=20)
+        self.modheader.grid(row=0, column=4,)
+
+        self.profheader = Frame(self.header)
+        self.proflabel = Label(self.profheader,text = 'Proficiency bonus')
+        self.proflabel.pack()
+        self.profentry = Entry(self.profheader, width=3,bg='white',text='0')
+        self.profentry.pack()
+        self.profheader.grid(row=0, column=4)
+
+        self.header.pack(anchor='w')
+        for skill in sorted(cf.SKILLDICT):
+            self.skillDict[skill] = SkillWidget(self, skill)
+            self.skillDict[skill].pack(anchor='w')
+
+
+class SkillWidget(Frame):
+    def __init__(self, parent, skill: str,modifier:int = 0):
+        Frame.__init__(self, parent,bd=1,relief=RIDGE,pady=2,)
+        self.name = Label(self, text=skill, justify=CENTER,width=14)
+        self.name.grid(row=0, column=0)
+
+        ttk.Separator(self,orient=VERTICAL).grid(column=1,row=0,sticky='ns')
+
+        self.ability= Label(self,text=cf.SKILLDICT[skill],width=4)
+        self.ability.grid(row=0, column=2)
+
+        ttk.Separator(self,orient=VERTICAL).grid(column=3,row=0, sticky='ns')
+
+        self.bonus = Entry(self,width=3,bg='white',justify=CENTER)
+        self.bonus.insert(0,modifier)
+        self.bonus.grid(row=0,column=4,)
+        self.grid_columnconfigure(2,)
+
+        ttk.Separator(self,orient=VERTICAL).grid(column=5,row=0, sticky='ns')
+
+
+        #Label(self,text='Proficient?:').grid(row=0,column=4)
+        self.proficient = BooleanVar()
+        self.prof = Checkbutton(self,text='Proficient?',variable=self.proficient,justify=CENTER)
+        self.prof.grid(row=0,column=6)
+
+
+    # This will create a composite widget which will hold
 
 
 class RollerWidget(LabelFrame):
@@ -21,7 +77,7 @@ class RollerWidget(LabelFrame):
         self.entry2 = Entry(self, width=4, bg='white')
         self.entry2.insert(0, '20')
         self.label3 = Label(self, text='+')
-        self.entry3 = Entry(self, width=2, bg='white')
+        self.entry3 = Entry(self, width=4, bg='white')
         self.entry3.insert(0, '0')
         self.label4 = Label(self, text='   Results: ')
         self.entry4 = Entry(self, width=5, bg='SystemButtonFace', bd=3)
@@ -32,6 +88,8 @@ class RollerWidget(LabelFrame):
         self.entry4.insert(0, total)
 
     def pack(self,*args,**kwargs):
+        # Possible functionality: add an additional argument that will pack all of the widgets vertically instead of
+        # horizontally
         self.label1.pack(side='left', fill='y',padx=5)
         self.entry1.pack(side='left', fill='y')
         self.label2.pack(side='left', fill='y')
@@ -43,25 +101,32 @@ class RollerWidget(LabelFrame):
         super().pack(*args,**kwargs)
 
 
-class SkillWidget(Frame):
-    def __init__(self, parent, skill: str,modifier:int = 0):
-        Frame.__init__(self, parent,bd=1,relief=RIDGE,pady=2,)
-        self.name = Label(self, text=skill, justify=CENTER,width=12)
-        self.name.grid(row=0, column=0)
-        self.ability= Label(self,text=cf.SKILLDICT[skill],width=4)
-        self.ability.grid(row=0, column=1)
-        self.abilitybonus=Label(self,text='Modifier: ')
-        self.abilitybonus.grid(row=0,column=2)
-        self.bonus = Entry(self,width=3,bg='white',justify=CENTER)
-        self.bonus.insert(0,modifier)
-        self.bonus.grid(row=0,column=3)
-        #Label(self,text='Proficient?:').grid(row=0,column=4)
-        self.proficient = BooleanVar()
-        self.prof = Checkbutton(self,text='Proficient?',variable=self.proficient)
-        self.prof.grid(row=0,column=4)
+class ComplexRollsTab(Frame):
+    def __init__(self,*args,**kwargs):
+        Frame.__init__(self,*args,**kwargs)
+        self.rollinstructions = Label(self,
+                                 text ='Enter any number of rolls you want calculated! Separate them by commas. \n'
+                                      'This handles addition or subtraction of integers or XdY rolls. '
+                                      'No parentheses or multiplication')
+        self.rollentry = Text(self, bg='white', width=20, height=2, wrap=CHAR)
+        self.rollButton = Button(self, text='Roll!', command=self.show_roll)
+        self.rollout = Entry(self, bg='SystemButtonFace', bd=3)
+        self.rollentry.insert('1.0', '1d20 - 1 - 1d4, 1d6 + 3')
+        self.rollinstructions.pack()
+        self.rollentry.pack()
+        self.rollButton.pack()
+        self.rollout.pack()
 
-
-    # This will create a composite widget which will hold
+    def show_roll(self):
+        # This method will take any number of dice summing expressions as a string, separated by commas, and return
+        # their evaluations in the same order, separated by commas by running the master_roll function on it
+        output = self.rollentry.get('1.0', END)
+        self.rollout.delete(0, END)
+        string2 = output.replace(' ', '')
+        a = string2.split(',')
+        for i in range(len(a)):
+            a[i] = str(cf.master_roll(a[i]))
+        self.rollout.insert(0, ','.join(a))
 
 
 class Character:
