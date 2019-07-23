@@ -21,20 +21,26 @@ class SkillTab(Frame):
 
         ttk.Separator(self.header,orient=VERTICAL).grid(column=3,row=0, sticky='ns')
 
-        self.modheader=Label(self.header,text= 'Ability Modifier',width=20)
+        self.modheader=Label(self.header,text= 'Ability\nModifier',)
         self.modheader.grid(row=0, column=4,)
+
+        ttk.Separator(self.header,orient=VERTICAL).grid(column=5,row=0, sticky='ns')
 
         self.profheader = Frame(self.header)
         self.proflabel = Label(self.profheader,text = 'Proficiency bonus')
         self.proflabel.pack()
-        self.profentry = Entry(self.profheader, width=3,bg='white',text='0')
+        self.profentry = Entry(self.profheader, width=3,bg='white',justify=CENTER)
+        self.profentry.insert(0,'0')
         self.profentry.pack()
-        self.profheader.grid(row=0, column=4)
+        self.profheader.grid(row=0, column=6)
 
         self.header.pack(anchor='w')
         for skill in sorted(cf.SKILLDICT):
             self.skillDict[skill] = SkillWidget(self, skill)
             self.skillDict[skill].pack(anchor='w')
+
+    def get_proficiency_bonus(self):
+        return self.profentry.get()
 
 
 class SkillWidget(Frame):
@@ -62,6 +68,19 @@ class SkillWidget(Frame):
         self.proficient = BooleanVar()
         self.prof = Checkbutton(self,text='Proficient?',variable=self.proficient,justify=CENTER)
         self.prof.grid(row=0,column=6)
+
+        self.rollbutton = Button(self, text='Roll:',command=self.roll_the_die)
+        self.rollbutton.grid(row=0,column=7)
+
+        self.result = Entry(self,width=3,bg='SystemButtonFace',justify=CENTER)
+        self.result.grid(row=0,column=8)
+
+    def roll_the_die(self):
+        bonus= int(self.bonus.get())
+        if self.proficient.get() and self.master.get_proficiency_bonus()!='':
+            bonus= bonus + int(self.master.get_proficiency_bonus())
+        self.result.delete(0,END)
+        self.result.insert(0,cf.roll_die(1,20,bonus))
 
 
     # This will create a composite widget which will hold

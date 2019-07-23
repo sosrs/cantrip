@@ -23,6 +23,7 @@ def roll_die(num: int, die: int, bonus: int = 0)->int:
     total = 0
     for i in range(num):
         total += randint(1,die)
+    #print(num,'d',die,'+',bonus,'=', total)
     return total + bonus
 
 
