@@ -1,4 +1,4 @@
-# cantrip
+# cantrip v0.2
 ## Purpose
 This will be a DM helper application, that will allow you to quickly keep track of your party's skills and have a basic 
 initiative tracker.
@@ -7,11 +7,13 @@ initiative tracker.
 
 ####Dice roller:
 
-* Each tab will have a quick roller at the top which will allow you to roll any single XdY+Z roll
-  * TODO: Currently, during the app set up the addition of the roller to each tab is called by a function. The roller 
-  itself could probably be made into its own class
-* In addition, there is a dedicated roll expression parser tab, which will let you type any number of complicated die rolls
-and it will evaluate all of them
+* Each tab will have a quick roller at the top which will allow you to roll any single XdY+Z roll, along with selecting 
+advantage or disadvantage
+
+* In addition, there is a dedicated roll expression parser tab, which will let you type any number of complicated 
+die rolls and it will evaluate all of them
+  * TODO: this is lower priority, but each statement could take in an 'a' or 'd' at the beginning to calculate the roll 
+  with advantage or disadvantage
 
 
 #### Initiative tracker:
