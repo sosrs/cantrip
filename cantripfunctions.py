@@ -32,9 +32,9 @@ def roll_die(num: int, die: int, bonus: int = 0, adv: str = 'none') -> int:
         total += randint(1, die)
     total = total + bonus
     # print(num, 'd', die, '+', bonus, '=', total)
-    if adv in ['advantage', 'a', 'adv']:
+    if adv in ['advantage', 'a', 'adv', 'Advantage', 'A']:
         total = max(total, roll_die(num, die, bonus, 'n'))
-    elif adv in ['disadvantage', 'd', 'disadv', 'dis']:
+    elif adv in ['disadvantage', 'd', 'disadv', 'dis', 'Disadvantage', 'D']:
         total = min(total, roll_die(num, die, bonus, 'n'))
     return total
 
@@ -98,11 +98,6 @@ def add_roller(parent, method='pack'):
         RollerWidget(parent).pack()
     elif method == 'grid':
         RollerWidget(parent).grid(row=0, column=0)
-
-
-def widgetFunc(inputList, outputWidget, func=sum):
-    outputWidget.delete(0, END)
-    outputWidget.insert(func(inputList))
 
 
 print(re.split("([-+])", '1d4'.replace(' ', '')))
