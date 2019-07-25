@@ -1,4 +1,4 @@
-# cantrip v0.2
+# cantrip v0.29
 ## Purpose
 This will be a DM helper application, that will allow you to quickly keep track of your party's skills and have a basic 
 initiative tracker.
@@ -25,11 +25,11 @@ die rolls and it will evaluate all of them
 #### Import a party:
 * This will have a form to load a character or monster one by one
 * This will also have the option to load a text file in a specific format to load many characters at once.
-
+* TODO: the skill and ability blocks are added, but no current way to save.
 ####Skill tracker:
 * By party member, lists the modifiers to skills, saving throws, and attack bonus
 
-* Button to auto roll any skill in the list
+* Button to auto roll any skill in the list, with advantage or disadvantage
 
 
 
