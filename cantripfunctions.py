@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 import re
 
 # These are the custom functions and constants I will use in my cantrip app
-TITLESET = ['Making wizarding easier since the spellplague.', 'Ray of frost IS  a respectiable spell!',
+TITLESET = ['Making wizarding easier since the spellplague.', 'Ray of frost IS a respectable spell!',
             "No, I don't think that's how \"Friends\" works.",
             'I would like to use Prestidigitation to Charm the king with hypnosis.']
 
