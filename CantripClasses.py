@@ -5,6 +5,7 @@ import random
 from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import font
+from CombatTab import *
 
 
 class Cantrip(Tk):
@@ -258,7 +259,13 @@ class CombatTab(Frame):
     # todo: create the entire tab...
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
+        self.effects = EffectTracker(self,width=200)
+        self.effects.pack(side='right',fill='y')
+
         cf.add_roller(self)
+        self.test=LabelFrame(self,text='text',width=200,height=200)
+        self.test.pack(side='top',fill='x')
+
 
 
 class RollerWidget(LabelFrame):
@@ -330,7 +337,7 @@ class Character:
 
 class CharCombat:
     # This will take in a Character, and create a representation of them for combat (tracking mutable characteristics
+    # like current HP and status effects)
     def __init__(self, character):
         self.condition = set()
-#
-# like current HP and status effects)
+
