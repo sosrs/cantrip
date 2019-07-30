@@ -95,10 +95,6 @@ def add_roller(parent, method='pack'):
     # this function will pack the basic roll widget to the frame this is called on
     # intended to be called when a new tab is created
     if method == 'pack':
-        RollerWidget(parent).pack()
+        RollerWidget(parent).pack(fill='x')
     elif method == 'grid':
         RollerWidget(parent).grid(row=0, column=0)
-
-
-print(re.split("([-+])", '1d4'.replace(' ', '')))
-print(master_roll(''))

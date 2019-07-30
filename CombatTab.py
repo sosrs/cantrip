@@ -10,8 +10,9 @@ class EffectTracker(LabelFrame):
         LabelFrame.__init__(self, text='Combat Effects Tracker', *args, **kwargs)
         self.effectslist= []
 
-        self.newEffect = Frame(self)
-        self.newEffect.pack()
+        self.newEffect = Frame(self,relief=GROOVE,bd=2)
+        self.newEffect.pack(fill='x')
+        Label(self.newEffect,text='New Effect').grid(row=0,column=0)
 
 
 
