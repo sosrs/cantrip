@@ -259,12 +259,14 @@ class CombatTab(Frame):
     # todo: create the entire tab...
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
-        self.effects = EffectTracker(self,width=200)
-        self.effects.pack(side='right',fill='y')
-
         cf.add_roller(self)
-        self.test=LabelFrame(self,text='text',width=200,height=200)
-        self.test.pack(side='top',fill='x')
+
+        self.effects = EffectTracker(self,width=200)
+        self.effects.pack(side='right',fill=Y,expand=True)
+
+        self.test=LabelFrame(self,text='Initiative',width=300)
+        self.test.pack(side='top',fill=Y,expand=True)
+        #self.test2=Scrollable(self.effects)
 
 
 
