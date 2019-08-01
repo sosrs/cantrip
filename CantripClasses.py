@@ -264,9 +264,8 @@ class CombatTab(Frame):
         self.effects = EffectTracker(self,width=200)
         self.effects.pack(side='right',fill=Y,expand=True)
 
-        self.test=LabelFrame(self,text='Initiative',width=300)
+        self.test= LabelFrame(self,text='Initiative',width=300)
         self.test.pack(side='top',fill=Y,expand=True)
-        #self.test2=Scrollable(self.effects)
 
 
 

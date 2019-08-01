@@ -10,27 +10,30 @@ class EffectTracker(LabelFrame):
         LabelFrame.__init__(self, text='Combat Effects Tracker',labelanchor='n', *args, **kwargs)
         self.effectslist= []
         self.roundupdate = BooleanVar()
-        self.newEffect = LabelFrame(self,bd=2,text='New Effect')
-        self.newEffect.pack(expand=True,fill=X,anchor='n')
 
+        self.newEffect = LabelFrame(self,bd=2,text='New Effect')
+        self.sourceEntry= Entry(self.newEffect,bg='white',)
+        self.effectEntry= Text(self.newEffect,bg='white',height=3,width=40)
+        self.container=Frame(self.newEffect)
+        self.createEffect= Button(self.container,text='Create Effect',command= self.save_effect)
+        self.roundupdatebutton= Checkbutton(self.container,text='Increment every round',variable=self.roundupdate)
+
+        self.newEffect.grid(row=0,column=0,sticky='we')#,expand=True,fill=X,side='top',anchor='n')
         Label(self.newEffect,text='Name: ').grid(row=0,column=0)
         Label(self.newEffect,text='Effect: ').grid(row=1,column=0)
-        self.sourceEntry= Entry(self.newEffect,bg='white',)
-        self.effectEntry= Text(self.newEffect,bg='white',height=3,width=20)
-        self.sourceEntry.grid(row=0,column=1)
-        self.effectEntry.grid(row=1,column=1)
-
-        self.container=Frame(self.newEffect)
-        self.container.grid(row=3,column=0,columnspan=2)
-        self.createEffect= Button(self.container,text='Create Effect',command= self.save_effect)
+        self.sourceEntry.grid(row=0,column=1,sticky='we')
+        self.effectEntry.grid(row=1,column=1,sticky='we')
         self.createEffect.pack(side='left')
-
-        self.roundupdatebutton= Checkbutton(self.container,text='Increment every round',variable=self.roundupdate)
         self.roundupdatebutton.pack(side='left')
+        self.container.grid(row=3,column=0,columnspan=2)
+
+        self.scrollframe=Frame(self,relief=GROOVE,bd=4)
+        self.scrollframe.grid(row=1,column=0,sticky=E+W+N+S)#,anchor='n',side='top')
+        self.grid_rowconfigure(1,weight=1)
+        self.scrolls= Scrollable(self.scrollframe)
 
     def save_effect(self):
         pass
-
 
 
 class Effect(Frame):
@@ -40,28 +43,29 @@ class Effect(Frame):
 
 class Scrollable(Frame):
     def __init__(self,root):
-        Frame.__init__(self, root)
-        self.canvas = Canvas(root,borderwidth=0,background='#ffffff')
-        self.frame = Frame(self.canvas,background='#ffffff')
+        self.canvas = Canvas(root,borderwidth=0,background='white')
+        Frame.__init__(self, self.canvas,background='#ffffff',bd=2)
+        #self.frame = Frame(self.canvas,background='#ffffff')
         self.vsb = Scrollbar(root,orient='vertical',command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.vsb.set)
 
         self.vsb.pack(side='right',fill='y')
         self.canvas.pack(side='left',fill='both',expand=True)
-        self.canvas.create_window((4,4),window=self.frame,anchor='nw',tags='self.frame')
+        self.canvas.create_window((4,4),window=self,anchor='nw',tags='self.frame')
 
-        self.frame.bind('<Configure>',self.onFrameConfigure)
+        self.bind('<Configure>',self.onFrameConfigure)
 
+        # pack or grid widgets to self.frame
         self.populate()
 
     def populate(self):
-        pass
-        '''for row in range(100):
-            cf.RollerWidget(self.frame).pack()
-            Label(self.frame, text="%s" % row, width=3, borderwidth="1",
+
+        for row in range(3):
+            cf.RollerWidget(self).pack()
+            '''Label(self, text="%s" % row, width=3, borderwidth="1",
                      relief="solid").grid(row=row, column=0)
             t = "this is the second column for row %s" % row
-            Label(self.frame, text=t).grid(row=row, column=1)'''
+            Label(self, text=t).grid(row=row, column=1)'''
 
     def onFrameConfigure(self,event):
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
