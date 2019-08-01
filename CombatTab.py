@@ -9,19 +9,27 @@ class EffectTracker(LabelFrame):
     def __init__(self,*args,**kwargs):
         LabelFrame.__init__(self, text='Combat Effects Tracker',labelanchor='n', *args, **kwargs)
         self.effectslist= []
-
+        self.roundupdate = BooleanVar()
         self.newEffect = LabelFrame(self,bd=2,text='New Effect')
         self.newEffect.pack(expand=True,fill=X,anchor='n')
 
-        Label(self.newEffect,text='Source: ').grid(row=0,column=0)
+        Label(self.newEffect,text='Name: ').grid(row=0,column=0)
         Label(self.newEffect,text='Effect: ').grid(row=1,column=0)
         self.sourceEntry= Entry(self.newEffect,bg='white',)
         self.effectEntry= Text(self.newEffect,bg='white',height=3,width=20)
         self.sourceEntry.grid(row=0,column=1)
         self.effectEntry.grid(row=1,column=1)
 
-        self.createEffect= Button(self.newEffect,text='Create Effect')
-        self.createEffect.grid(row=3,column=0,columnspan=2)
+        self.container=Frame(self.newEffect)
+        self.container.grid(row=3,column=0,columnspan=2)
+        self.createEffect= Button(self.container,text='Create Effect',command= self.save_effect)
+        self.createEffect.pack(side='left')
+
+        self.roundupdatebutton= Checkbutton(self.container,text='Increment every round',variable=self.roundupdate)
+        self.roundupdatebutton.pack(side='left')
+
+    def save_effect(self):
+        pass
 
 
 
