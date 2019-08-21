@@ -151,7 +151,7 @@ class ComplexRollsTab(Frame):
         a = string2.split(',')
         for i in range(len(a)):
             a[i] = str(cf.master_roll(a[i]))
-        self.rollout.insert(0, ','.join(a))
+        self.rollout.insert(0, ' , '.join(a))
 
 
 class ImportTab(Frame):
