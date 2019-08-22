@@ -33,13 +33,20 @@ class EffectTracker(LabelFrame):
         self.scrolls= Scrollable(self.scrollframe)
 
     def save_effect(self):
-        pass
+        #todo: finish this
+
+        self.effectslist.append(Effect(self,self.sourceEntry.get(),self.effectEntry.get('1.0', END),
+                                       self.roundupdate.get()))
 
 
-class Effect(Frame):
+class Effect(LabelFrame):
     # This is a single effect object, which will be created and tracked by the Effect tracker
-    def __init__(self,name,roundupdate=0,*args,**kwargs):
-        Frame.__init__(self,*args,**kwargs)
+    def __init__(self,name, effect, roundupdate=0,*args,**kwargs):
+        #todo: finish this
+        Frame.__init__(self, text= name,*args,**kwargs)
+        self.roundupdate= roundupdate
+        self.effect=effect
+
 
 class Scrollable(Frame):
     def __init__(self,root):
