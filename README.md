@@ -15,12 +15,10 @@ die rolls and it will evaluate all of them
   * TODO: this is lower priority, but each statement could take in an 'a' or 'd' at the beginning to calculate the roll 
   with advantage or disadvantage
 
-
 #### Initiative tracker:
 * Page dedicated to combat
 * Keep track of the initiative order of combat, status effects, and HP
 * Sidebar with a list of number counters (takes in: starting number, source, and notes) to track spells and effects
-
 
 #### Import a party:
 * This will have a form to load a character or monster one by one
@@ -31,7 +29,9 @@ die rolls and it will evaluate all of them
 
 * Button to auto roll any skill in the list, with advantage or disadvantage
 
-
+#### NPC Generator (to be implemented)
+* Mad Libs generator, will maintain a list of adjectives to randomly generate an NPC (disposition, level of knowledge, etc.)
+* Can expand each category to review the list directly
 
 Cheat sheet with list of status effects
 
