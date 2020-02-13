@@ -88,7 +88,7 @@ class SkillWidget(Frame):
 
         ttk.Separator(self, orient=VERTICAL).grid(column=3, row=0, sticky='ns')
 
-        self.bonus = Entry(self, width=3, bg='white', justify=CENTER)
+        self.bonus = Entry(self, width=8, bg='white', justify=CENTER)
         self.bonus.insert(0, modifier)
         self.bonus.grid(row=0, column=4, )
         self.grid_columnconfigure(2, )
@@ -263,6 +263,8 @@ class CombatTab(Frame):
 
         self.effects = EffectTracker(self,width=200)
         self.effects.pack(side='right',fill=Y,expand=True)
+
+        # placeholder for initiative tracker
 
         self.test= LabelFrame(self,text='Initiative',width=300)
         self.test.pack(side='top',fill=Y,expand=True)

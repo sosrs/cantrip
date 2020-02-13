@@ -68,6 +68,7 @@ class Scrollable(Frame):
     def populate(self):
 
         for row in range(3):
+            # filler while i create the proper effect widget
             cf.RollerWidget(self).pack()
             '''Label(self, text="%s" % row, width=3, borderwidth="1",
                      relief="solid").grid(row=row, column=0)

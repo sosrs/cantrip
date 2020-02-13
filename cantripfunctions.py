@@ -8,24 +8,32 @@ TITLESET = ['Making wizarding easier since the spellplague.', 'Ray of frost IS a
             "No, I don't think that's how \"Friends\" works.",
             'I would like to use Prestidigitation to Charm the king with hypnosis.']
 
+# Set of skills in game (possibly to be turned into list)
 SKILLSET = {'Athletics', 'Acrobatics', 'Sleight of Hand', 'Stealth', 'Arcana', 'History', 'Investigation', 'Nature',
             'Religion', 'Animal Handling', 'Insight', 'Medicine', 'Perception', 'Survival', 'Deception', 'Intimidation',
             'Performance', 'Persuasion'}
-
+# Dict of the skills and their associated stats
 SKILLDICT = {'Athletics': 'Str', 'Acrobatics': 'Dex', 'Sleight of Hand': 'Dex', 'Stealth': 'Dex', 'Arcana': 'Int',
              'History': 'Int', 'Investigation': 'Int', 'Nature': 'Int', 'Religion': 'Int', 'Animal Handling': 'Wis',
              'Insight': 'Wis', 'Medicine': 'Wis', 'Perception': 'Wis', 'Survival': 'Wis', 'Deception': 'Cha',
              'Intimidation': 'Cha', 'Performance': 'Cha', 'Persuasion': 'Cha'}
-
+#Set of different conditions
 CONDITIONSET = {'Blinded', 'Charmed', 'Deafened', 'Fatigued', 'Frightened', 'Grappled', 'Incapacitated', 'Invisible',
                 'Paralyzed', 'Petrified', 'Poisoned', 'Prone', 'Restrained', 'Stunned', 'Unconscious', 'Exhaustion'}
 
 
 def roll_die(num: int, die: int, bonus: int = 0, adv: str = 'none') -> int:
-    # This function will make a standard XdY + Z roll and return it as an integer
-    # Both the number of dice and the number of sides must be positive nonzero integers
-    # The fourth argument notes if someone has advantage or disadvantage, and will calculate the roll appropriately.
-    # Under this function, any die roll can have "advantage", not just d20 rolls.
+    '''
+    This function will make a standard XdY + Z roll and return it as an integer
+    Both the number of dice and the number of sides must be positive nonzero integers
+    The fourth argument notes if someone has advantage or disadvantage, and will calculate the roll appropriately.
+    Under this function, any die roll can have advantage or disadvantage, not just d20 rolls.
+    :param num: number of times to roll the die in this roll
+    :param die: the number of faces the die has in this roll
+    :param bonus: any integer modification to the roll (can be negative)
+    :param adv: string that describes whether the roll has advantage or disadvantage
+    :return: integer result of the roll
+    '''
     from random import randint
     total = 0
     for i in range(num):
@@ -40,7 +48,11 @@ def roll_die(num: int, die: int, bonus: int = 0, adv: str = 'none') -> int:
 
 
 def evaluate_roll(inputstr: str) -> int:
-    # This will take in a string of either an integer or a XdY roll and return the result as an integer
+    '''
+    This will take in a single string of either an integer or a 'XdY' roll and return the result as an integer.
+    :param inputstr: string of format 'XdY' or a single integer string
+    :return: integer result of the roll
+    '''
     try:
         return int(inputstr)
     except ValueError:
@@ -56,11 +68,16 @@ def evaluate_roll(inputstr: str) -> int:
 
 
 def master_roll(string: str) -> str:
-    # This function will take in a single string expression of any number of XdY or integer components
-    # and sum the total
+    '''
+    This function will take in a single string expression of any number of XdY or integer components and sum the total
+    :param string: string of format (AdB + CdE + F)
+    :return: string of result of roll expression
+    '''
+    # Returns an empty string for an empty string
     string = string.replace(' ', '')
     if string == '' or string == '\n':
         return ''
+
     # strip string of spaces, split the string on - or + but keep those items as entries in the list
     a = re.split("([-+])", string)
     for i in range(len(a)):
